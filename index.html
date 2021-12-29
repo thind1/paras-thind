@@ -233,5 +233,34 @@ SOFTWARE.
         }
 
     </script>
+
+import com.google.android.gms.ads.rewarded.RewardedAd;
+
+public class MainActivity extends Activity {
+  private RewardedAd mRewardedAd;
+  private final String TAG = "MainActivity";
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+
+    AdRequest adRequest = new AdRequest.Builder().build();
+
+    RewardedAd.load(this, "ca-app-pub-9580857664020392/5502465933",
+      adRequest, new RewardedAdLoadCallback() {
+        @Override
+        public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+          // Handle the error.
+          Log.d(TAG, loadAdError.getMessage());
+          mRewardedAd = null;
+        }
+
+        @Override
+        public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+          mRewardedAd = rewardedAd;
+          Log.d(TAG, "Ad was loaded.");
+        }
+    });
+  }
+}
 </body>
 </html>
